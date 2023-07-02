@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Book } from '../../shared/book';
@@ -9,7 +9,7 @@ import { BookStoreService } from '../../shared/book-store.service';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent {
+export class BookListComponent implements OnInit {
   books: Book[];
   nameFilter: string;
   categories: any = [];
@@ -25,14 +25,13 @@ export class BookListComponent {
 
   constructor(private service: BookStoreService) {
 
-
-
-    this.service.getAll({page: 0, size: 3, orderBy: 'random', orderByType: 'page_id'}).subscribe((pData) => {
-      this.books = pData;
-    });
-  
-
   }
 
+
+  ngOnInit(): void {
+    this.service.getAll({page: 0, size: 3, orderBy: 'random', orderByType: 'page_id'}).subscribe((pData) => {
+      this.books = pData;
+    });  
+  }
 
 }
