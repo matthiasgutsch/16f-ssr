@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { Book } from './book';
 })
 export class BookStoreService {
   size: number;
-  private apiUrl = 'https://api.matthiasgutsch.com';
+  private apiUrl = 'https://api.startupinspire.com';
 
    httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +17,12 @@ export class BookStoreService {
   private authToken: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
   
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    handler: HttpBackend
+    ) {
+    this.http = new HttpClient(handler);
+
+  }
 
 
   getParams(params: HttpParams, pars: any): HttpParams {
@@ -102,8 +107,8 @@ export class BookStoreService {
     let params = new HttpParams();
     params = this.getParams(params, pars);
     return this.http
-      .get<HttpResponse<any[]>>(`${this.apiUrl}/products`, {headers:header,
-        observe: 'response',
+    .get<HttpResponse<any[]>>(`${this.apiUrl}/startups/list_public`, {headers:header,
+      observe: 'response',
         params,
       })
       .pipe(
@@ -115,13 +120,6 @@ export class BookStoreService {
         }),
         catchError(this.handleError)
       );
-      
-    return this.http.get<Book[]>(`${this.apiUrl}/books`).pipe(
-      catchError(err => {
-        console.error(err);
-        return of([]);
-      })
-    );
   }
 
   getSingle(isbn: string): Observable<Book> {

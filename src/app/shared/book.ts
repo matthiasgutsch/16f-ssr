@@ -1,7 +1,7 @@
 export interface Book {
   id: string;
   title: string;
-  page_title?: string;
+  startup_name?: string;
   authors: string[];
   published?: string;
   subtitle?: string;
