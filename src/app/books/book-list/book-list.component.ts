@@ -10,7 +10,7 @@ import { BookStoreService } from '../../shared/book-store.service';
   styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent {
-  books$: Observable<Book[]>;
+  books: Book[];
   nameFilter: string;
   categories: any = [];
   descriptionFilter: string;
@@ -25,16 +25,13 @@ export class BookListComponent {
 
   constructor(private service: BookStoreService) {
 
-    const params = {
-      nameFilter: '',
-      typeFilter: '',
-      orderBy: 'desc',
-      orderByType: 'startup_id',
-      size: 6,
-      page: 0
-    }
 
-    this.books$ = this.service.getAll(params);
+
+    this.service.getAll({page: 0, size: 3, orderBy: 'random', orderByType: 'page_id'}).subscribe((pData) => {
+      this.books = pData;
+    });
+  
+
   }
 
 
