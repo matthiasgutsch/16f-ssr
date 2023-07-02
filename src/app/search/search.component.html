@@ -7,7 +7,7 @@
 
 <ul class="search-results" *ngIf="results$ | async as results">
   <li *ngFor="let book of results">
-    <a [routerLink]="['/books', book.isbn]">
+    <a [routerLink]="['/books', book.id]">
       {{ book.title }}
       <p role="doc-subtitle">{{ book.subtitle }}</p>
     </a>

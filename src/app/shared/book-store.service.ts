@@ -147,7 +147,7 @@ export class BookStoreService {
 
   update(book: Book): Observable<Book> {
     return this.http.put<Book>(
-      `${this.apiUrl}/books/${book.isbn}`,
+      `${this.apiUrl}/books/${book.id}`,
       book
     );
   }

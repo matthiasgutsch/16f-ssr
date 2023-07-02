@@ -10,7 +10,7 @@
     </div>
     <div>
       <h2>ISBN</h2>
-      {{ book.isbn | isbn }}
+      {{ book.id | isbn }}
     </div>
     <div *ngIf="book.published">
       <h2>Published</h2>
@@ -24,11 +24,11 @@
     alt="Cover">
   <a class="button arrow-left" routerLink="..">Back to list</a>
   <ng-container *bmLoggedinOnly>
-    <button class="red" bmConfirm="Remove book?" (confirm)="removeBook(book.isbn)">
+    <button class="red" bmConfirm="Remove book?" (confirm)="removeBook(book.id)">
       Remove book
     </button>
     <a class="button"
-      [routerLink]="['/admin/edit', book.isbn]">
+      [routerLink]="['/admin/edit', book.id]">
       Edit book
     </a>
   </ng-container>
