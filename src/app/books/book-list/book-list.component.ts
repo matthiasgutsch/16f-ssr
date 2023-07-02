@@ -21,70 +21,21 @@ export class BookListComponent {
   orderBy: string;
   orderByType: string;
   typeFilter: any;
-  pageSize;
   page = 1;
-  
+
   constructor(private service: BookStoreService) {
 
-    const params = this.getRequestParams(
-      this.nameFilter,
-      this.typeFilter,
-      this.orderBy = 'desc',
-      this.orderByType = 'startup_id',
-      this.page,
-      this.pageSize = 6,
-    );
-    
-    
+    const params = {
+      nameFilter: '',
+      typeFilter: '',
+      orderBy: 'desc',
+      orderByType: 'startup_id',
+      size: 6,
+      page: 0
+    }
+
     this.books$ = this.service.getAll(params);
   }
 
-
-  getRequestParams(
-    searchTitle: string, 
-    typeTitle: string,
-    orderBy: string,
-    orderByType: string,
-    page: number, 
-    pageSize: string | number): any {
-    // tslint:disable-next-line:prefer-const
-    let params: any = {};
-    let adder = '?';
-    if (page) {
-      params[`page`] = page - 1;
-      adder + 'page=' + (page - 1);
-      adder = '&';
-    }
-    if (searchTitle) {
-      params[`name`] = searchTitle;
-      adder + 'name=' + searchTitle;
-      adder = '&';
-    }
-
-    if (typeTitle) {
-      params[`type`] = typeTitle;
-      adder + 'type=' + typeTitle;
-      adder = '&';
-    }
-
-    
-    if (orderBy) {
-      params[`orderBy`] = orderBy;
-      adder + 'orderBy=' + orderBy;
-    }
-
-    if (orderByType) {
-      params[`orderByType`] = orderByType;
-      adder + 'orderByType=' + orderByType;
-    }
-
-    if (pageSize) {
-      params[`size`] = pageSize;
-      adder + 'size=' + pageSize;
-    }
-
-    return params;
-
-  }
 
 }
